@@ -22,10 +22,13 @@ def update_user():
 
         # Emitir una notificación al usuario actualizado
         socketio.emit('user_updated', 
-                      {'msg': f'Tu perfil ha sido actualizado, {new_name}.'}, 
+                      {'msg': f'Tu perfil ha sido actualizado, {new_name}. notificion enviada por delegacion a socket'}, 
                       to=str(user_id))
-        return jsonify({"status": "success", "message": "Usuario actualizado"})
-    return jsonify({"status": "error", "message": "Usuario no encontrado"}), 404
+        #emitir notificacion y reultado backend al admin que modifico
+        return jsonify({"status": "success", "message": "Usuario actualizad en el admin, el usaurio recibira por socket la notificacion"})
+
+    #emitir notificacion y reultado backend del error al admin
+    return jsonify({"status": "error", "message": "Usuario no encontrado, notifiacion resultado directo y no por socket"}), 404
 
 @users_bp.route('/edit/<int:user_id>')
 def edit_user(user_id):
