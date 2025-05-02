@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Actualizar Usuario</title>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+    <script src="/static/main.js"></script>
+</head>
+<body>
+    <h1>Actualizar Usuario</h1>
+    <form id="updateForm">
+        <input type="hidden" name="id" value="{{ user['id'] }}">
+        Nombre: <input type="text" name="name" value="{{ user['name'] }}"><br>
+        Email: <input type="text" name="email" value="{{ user['email'] }}"><br>
+        <button type="submit">Actualizar</button>
+    </form>
+    <script>
+        
+        socket.emit('join_user_room', { user_id: "{{ user['id'] }}" });
+
+        document.getElementById('updateForm').onsubmit = async function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+
+            const response = await fetch('/users/update_user', {
+                method: 'POST',
+                body: formData,
+            });
+
+            const result = await response.json();
+            alert(result.message);
+        };
+    </script>
+</body>
+</html>

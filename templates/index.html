@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio</title>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+    <script src="/static/main.js"></script>
+</head>
+<body>
+    <h1>Bienvenido, {{ user['name'] }}!</h1>
+    <p>Tu correo: {{ user['email'] }}</p>
+    <button onclick="logout()">Cerrar Sesión</button>
+    <script>
+        
+        socket.emit('join_user_room', { user_id: "{{ user['id'] }}" });
+
+        function logout() {
+            window.location.href = "/auth/logout";
+        }
+    </script>
+</body>
+</html>
